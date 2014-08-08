@@ -21,8 +21,9 @@
 
     // I guess I'll write my own jankety typeahead
     function updateTypeahead () {
-
-      var target    = $('#input-search').val(),
+	console.time("update");
+      
+		var target    = $('#input-search').val(),
         $blankSlate = $('.blank-slate'),
         listIsEmpty = true,
         // easier to work with an array than the json object
@@ -57,6 +58,7 @@
       else {
         fadeOutIfNecessary($blankSlate);
       }
+	  console.timeEnd("update");
     }
 
 
