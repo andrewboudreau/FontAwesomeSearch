@@ -50,16 +50,28 @@
 				$allRows.velocity('fadeIn', { duration: DURATION });
 				return;
 			}
-			
+			console.time("filter items");
             var target = $('#input-search').val(),
-                hits = [];
+                hits = [], 
+				misses = [];
 
 			for (key in nameToElement) {
 				if(key.indexOf(target) !== -1) {
 					hits.push(nameToElement[key]);
-				}				
+				} else {
+					misses.push(nameToElement[key]);
+				}					
 			}
+			console.timeEnd("filter items");
 			
+			console.time("update ui");
+			
+			//$(hits).velocity('fadeIn', { duration: DURATION });
+			// $(misses).velocity('fadeOut', { duration: DURATION });
+			$(hits).show();
+			$(misses).hide();
+			
+			console.timeEnd("update ui");
 			// previous matches collection
 			// fastest way to figure out which items to show and hide.
 			// show the matches, hide the others.
