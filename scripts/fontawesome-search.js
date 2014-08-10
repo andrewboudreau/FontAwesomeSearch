@@ -60,6 +60,10 @@
 				}				
 			}
 			
+			// previous matches collection
+			// fastest way to figure out which items to show and hide.
+			// show the matches, hide the others.
+			
 			// $allRows.hide();
 			// $(hits).velocity('fadeIn', { duration: DURATION });
 			
