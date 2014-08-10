@@ -44,9 +44,7 @@
 		window.nameToElement = nameToElement;
 		
         function updateTypeahead() {
-            console.time("update");
-			
-			var target = inputElement.val();
+            console.time("updateTypeahead");
 			
 			if(target === "") {
 				$allRows.velocity('fadeIn', { duration: DURATION });
@@ -62,10 +60,10 @@
 				}				
 			}
 			
-			$allRows.hide();
-			$(hits).velocity('fadeIn', { duration: DURATION });
+			// $allRows.hide();
+			// $(hits).velocity('fadeIn', { duration: DURATION });
 			
-            console.timeEnd("update");
+            console.timeEnd("updateTypeahead");
         }
 
         function updateTypeahead_original() {
