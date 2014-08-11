@@ -6,18 +6,14 @@
         // Initial fetch & render the icons into the HTML
         // so we can work with them as the user searches
         var iconJSON = window.icondata || {},
-            tmpl = $('#tmpl').html(),
-            // ms duration for Velocity animations
-            DURATION = 75;
+            tmpl = $('#tmpl').html();
 
         $('.results').html(window.Mustache.render(tmpl, iconJSON));
-
 
         // Init bootstrap lib for killer tooltips
         $('tr').tooltip({
             placement: 'right'
         });
-
 
 		// the goal is to get updateTypeahead to execute as fast as possible
 		// remove all work that can be done once and ahead of time.
@@ -26,60 +22,32 @@
 		var $allRows = $("tr.icon-row");
 		var nameToElement = {};
 		var key = "";
-		//var icons = icondata.icons;
-		// for (key in icons) {
-		// if (icons.hasOwnProperty(key)) {
-			 // console.log(icons[key]);
-			// }
-		// }
 		
-		// // var foo;
+		// map the icon names to elements on the page.
 		$("tr.icon-row").each(function(index){
 			var names = $(this).find("a").text().trim().replace(/,/g, '');
 			nameToElement[names] = this;
-			//console.log(names);
 		});
 		
 		//for debugging easier
 		window.nameToElement = nameToElement;
 		
         function updateTypeahead() {
-            console.time("updateTypeahead");
-			
+            var target = inputElement.val();
+				
 			if(target === "") {
-				$allRows.velocity('fadeIn', { duration: DURATION });
+				$allRows.show();
 				return;
 			}
-			console.time("filter items");
-            var target = $('#input-search').val(),
-                hits = [], 
-				misses = [];
-
+			
+			// loop all the names, find matches, decide if it should be shown or hidden
 			for (key in nameToElement) {
 				if(key.indexOf(target) !== -1) {
-					hits.push(nameToElement[key]);
+					nameToElement[key].style.display = "table-row";
 				} else {
-					misses.push(nameToElement[key]);
+					nameToElement[key].style.display = "none";
 				}					
 			}
-			console.timeEnd("filter items");
-			
-			console.time("update ui");
-			
-			//$(hits).velocity('fadeIn', { duration: DURATION });
-			// $(misses).velocity('fadeOut', { duration: DURATION });
-			$(hits).show();
-			$(misses).hide();
-			
-			console.timeEnd("update ui");
-			// previous matches collection
-			// fastest way to figure out which items to show and hide.
-			// show the matches, hide the others.
-			
-			// $allRows.hide();
-			// $(hits).velocity('fadeIn', { duration: DURATION });
-			
-            console.timeEnd("updateTypeahead");
         }
 
         function updateTypeahead_original() {
